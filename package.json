@@ -10,9 +10,11 @@
 	},
 	"dependencies": {
 		"jasmine-data-provider": "^2.2.0",
-		"protractor": "^5.4.3",
-		"protractor-jasmine2-html-reporter": "^0.0.7"
+		"protractor": "^5.4.3"
 	},
 	"author": "Tupurani Krishna Kaushik",
-	"license": "ISC"
+	"license": "ISC",
+	"devDependencies": {
+		"protractor-beautiful-reporter": "^1.3.6"
+	}
 }

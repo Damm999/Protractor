@@ -3,7 +3,8 @@
  */
 
 // Initilizing Jasmine Reporter
-var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
+var HtmlReporter = require('protractor-beautiful-reporter');
+var originalJasmine2MetaDataBuilder = new HtmlReporter({'baseDirectory': './'})["jasmine2MetaDataBuilder"];
 
 
 exports.config = {
@@ -19,7 +20,7 @@ exports.config = {
 	// Spec patterns are relative to the configuration file location passed
 	// to protractor (in this example conf.js).
 	// They may include glob patterns.
-	specs: ['TestScripts/Banking_Customer.js'],
+	specs: ['TestScripts/Googlemaps_testsuite.js'],
 	
 
 	// Onprepare funciton to set things globally
@@ -27,13 +28,24 @@ exports.config = {
 		
 		browser.driver.manage().window().maximize();
 		
-		// Report functionality
-		jasmine.getEnv().addReporter(
-			new Jasmine2HtmlReporter({
-				savePath: 'target/screenshots'
-			})
-		);
+		// Beautiful reporter
+		jasmine.getEnv().addReporter(new HtmlReporter({
+			baseDirectory: 'target/beautiful-reports',
+			screenshotsSubfolder: 'images',
+			jsonsSubfolder: 'jsons',
+			jasmine2MetaDataBuilder: function (spec, descriptions, results, capabilities) {
+				//filter for pendings with pending() function and "unfail" them
+				if (results && results.failedExpectations && results.failedExpectations.length>0 && "Failed: => marked Pending" === results.failedExpectations[0].message) {
+					results.pendingReason = "Marked Pending with pending()";
+					results.status = "pending";
+					results.failedExpectations = [];
+				}
+				//call the original method after my own mods
+				return originalJasmine2MetaDataBuilder(spec, descriptions, results, capabilities);
+			},
+		 }).getJasmine2Reporter());
 	},
+	
 
 	// Options to be passed to Jasmine-node.
 	jasmineNodeOpts: {

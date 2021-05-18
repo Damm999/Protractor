@@ -21,13 +21,22 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with: 
+          path: Protractor_workspace
     - name: Running Protractor Test Cases ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install npm dependencies
-      run: npm i
+      run: |
+        cd ${{ github.workspace }}/Protractor_workspace/
+        ls -lah
+        npm i
     - name: Bring up selenium webdriver.
-      run: npm run setup
+      run: |
+        cd ${{ github.workspace }}/Protractor_workspace/
+        npm run setup
     - name: Run Protractor Test Cases
-      run: npm run execute
+      run: |
+        cd ${{ github.workspace }}/Protractor_workspace/
+        npm run execute

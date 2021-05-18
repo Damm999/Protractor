@@ -1,3 +1,5 @@
+[![Proctractor CI](https://github.com/Damm999/Protractor/actions/workflows/CI.yml/badge.svg)](https://github.com/Damm999/Protractor/actions/workflows/CI.yml)
+
 # Protractor
 > Automation Framework for Protractor
 

@@ -40,9 +40,20 @@ jobs:
     - name: Bring up selenium webdriver.
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
-        pm2 start "npm run setup" --name webdriverS --watch
+        pm2 start "npm run setup" --name webdriverS --watch -l ./webdriver
         sleep 10s
     - name: Run Protractor Test Cases
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
         npm run execute
+        
+    - uses: actions/upload-artifact@v2
+      continue-on-error: true
+      with:
+        name: webdriver
+        path: webdriver/**
+    - uses: actions/upload-artifact@v2
+      continue-on-error: true
+      with:
+        name: beautiful-reports
+        path: target/beautiful-reports/**

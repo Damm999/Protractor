@@ -40,7 +40,7 @@ jobs:
     - name: Bring up selenium webdriver.
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
-        pm2 start "npm run setup" --name webdriverS --watch -l ./webdriver
+        pm2 start "npm run setup" --name webdriverS --log ./webdriver.log
         sleep 10s
     - name: Run Protractor Test Cases
       continue-on-error: true

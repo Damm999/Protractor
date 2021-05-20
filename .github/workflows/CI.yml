@@ -41,7 +41,7 @@ jobs:
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
         pm2 start "npm run setup" --name webdriverS --log ./webdriver.log
-        sleep 10s
+        sleep 30s
     - name: Run Protractor Test Cases
       continue-on-error: true
       run: |
@@ -52,7 +52,7 @@ jobs:
       continue-on-error: true
       with:
         name: webdriver
-        path: ${{ github.workspace }}/Protractor_workspace/webdriver/
+        path: ${{ github.workspace }}/Protractor_workspace/webdriver.log
         
     - uses: actions/upload-artifact@v2
       continue-on-error: true

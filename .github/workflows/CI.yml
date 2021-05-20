@@ -8,6 +8,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+    
+  workflow_dispatch:
+    inputs:
+      sutieName:
+        required: true
+        description: "Custom Execution Suite (WIP)"
+        default: "sanity"
 
 jobs:
   build:
@@ -44,9 +51,17 @@ jobs:
         sleep 30s
     - name: Run Protractor Test Cases
       continue-on-error: true
+      if: ${{ github.event.inputs.sutieName == '' }}
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
         npm run execute
+        
+    - name: Run Protractor Test Cases
+      continue-on-error: true
+      if: ${{ github.event.inputs.sutieName != '' }}
+      run: |
+        cd ${{ github.workspace }}/Protractor_workspace/
+        npm run ${{ github.event.inputs.sutieName }}
         
     - uses: actions/upload-artifact@v2
       continue-on-error: true

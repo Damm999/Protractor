@@ -31,11 +31,12 @@ jobs:
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
         ls -lah
+        npm install pm2 -g
         npm i
     - name: Bring up selenium webdriver.
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
-        npm run setup
+        pm2 start "npm run setup" --name webdriverS
     - name: Run Protractor Test Cases
       run: |
         cd ${{ github.workspace }}/Protractor_workspace/
